@@ -5,13 +5,13 @@ VALUES
     ('CUSTOMER');
 
 INSERT INTO auth.users
-    (username, email, age, role_id)
+    (username, password, email, age, role_id)
 VALUES
-    ('phong', 'phong@gmail.com', 21, 1),
-    ('nam', 'nam@gmail.com', 22, 2),
-    ('an', 'an@gmail.com', 20, 3),
-    ('minh', 'minh@gmail.com', 25, 3),
-    ('long', 'long@gmail.com', 19, 3);
+    ('phong', '123456', 'phong@gmail.com', 21, 1),
+    ('nam', '123456', 'nam@gmail.com', 22, 2),
+    ('an', '123456', 'an@gmail.com', 20, 3),
+    ('minh', '123456', 'minh@gmail.com', 25, 3),
+    ('long', '123456', 'long@gmail.com', 19, 3);
 
 INSERT INTO catalog.categories (name)
 VALUES

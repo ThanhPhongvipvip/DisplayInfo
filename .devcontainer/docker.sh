@@ -15,7 +15,6 @@ docker run -it --rm \
   -w /workspace \
   login-webapp \
   bash -c '
-echo "=== Khởi động PostgreSQL ==="
 sudo service postgresql start
 
 echo "=== Nạp dữ liệu SQL (nếu có) ==="
@@ -29,20 +28,16 @@ if [ $? -ne 0 ]; then
     sudo -u postgres psql -d webapp_db -f "database/04_CreateRole.sql" || true
 fi
 
-echo "=== Cài đặt thư viện Backend ==="
 cd backend && npm install && cd ..
 
-echo "=== Cài đặt thư viện Frontend ==="
 cd frontend && npm install && cd ..
 
-echo "=== Bắt đầu chạy Project ==="
 export DB_HOST=localhost
 export DB_PORT=5432
 export DB_USER=admin
 export DB_PASSWORD=admin123
 export DB_NAME=webapp_db
 
-# Sử dụng concurrently để chạy song song Backend (cổng 5000) và Frontend (cổng 3000)
 concurrently --kill-others \
   "cd backend && npm start" \
   "cd frontend && npm run dev"
