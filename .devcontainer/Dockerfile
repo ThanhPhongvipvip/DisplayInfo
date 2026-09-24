@@ -15,3 +15,5 @@ RUN echo "ALL ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # Cài đặt concurrently để chạy nhiều process (backend/frontend)
 RUN npm install -g concurrently
+
+##
