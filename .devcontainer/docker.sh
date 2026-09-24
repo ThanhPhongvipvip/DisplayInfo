@@ -26,7 +26,7 @@ if [ $? -ne 0 ]; then
     PGPASSWORD=admin123 psql -U admin -d webapp_db -h localhost -f "database/01_Schema.sql" || true
     PGPASSWORD=admin123 psql -U admin -d webapp_db -h localhost -f "database/02_CreateTable.sql" || true
     PGPASSWORD=admin123 psql -U admin -d webapp_db -h localhost -f "database/03_ InsertData.sql" || true
-    PGPASSWORD=admin123 psql -U admin -d webapp_db -h localhost -f "database/04_CreateRole.sql" || true
+    sudo -u postgres psql -d webapp_db -f "database/04_CreateRole.sql" || true
 fi
 
 echo "=== Cài đặt thư viện Backend ==="
