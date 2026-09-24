@@ -1,0 +1,10 @@
+CREATE SCHEMA auth;
+
+CREATE SCHEMA catalog;
+
+CREATE SCHEMA sales;
+
+CREATE SCHEMA inventory;
+
+CREATE SCHEMA audit;
+
