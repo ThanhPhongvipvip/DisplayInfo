@@ -20,7 +20,7 @@ flowchart TD
     API -.->|Dữ liệu JSON| UI
     UI -.->|Cập nhật giao diện| User
 ```
-# Dự án Web Thương mại điện tử TechStore
+# Demo Database
 
 ## Tổng quan
 Đây là ứng dụng web thương mại điện tử Full-stack. Hệ thống cung cấp các chức năng như đăng nhập, xem danh sách sản phẩm, quản lý giỏ hàng và xem danh sách đơn hàng dành cho quyền Admin.

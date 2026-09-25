@@ -16,10 +16,7 @@ Dự án này đã được cấu hình sẵn môi trường DevContainer. Môi 
 - Hệ thống sẽ tự động khởi chạy toàn bộ dịch vụ.
 
 ### 2. Chạy thủ công
-Nếu bạn không sử dụng DevContainers, bạn cần chạy thủ công từng dịch vụ:
-- Cơ sở dữ liệu: Đảm bảo PostgreSQL đang chạy và đã được khởi tạo cấu trúc bảng (schema) cũng như dữ liệu mẫu.
-- Backend: Mở terminal tại thư mục `backend`, chạy lệnh `npm install`, sau đó chạy `npm start` hoặc `node server.js`. Backend sẽ hoạt động ở cổng 5000.
-- Frontend: Mở terminal tại thư mục `frontend`, chạy lệnh `npm install`, sau đó chạy `npm run dev`. Giao diện Frontend sẽ hoạt động ở cổng do Vite cấp (thường là 5173).
+Nếu bạn không sử dụng DevContainers, sử dụng " ./docker.sh "
 
 ## Cấu trúc Dự án
 
@@ -47,7 +44,7 @@ Hệ thống phân chia rõ ràng các bảng vào nhiều schema khác nhau đ�
 
 ## Tài khoản Thử nghiệm
 Bạn có thể sử dụng các tài khoản có sẵn dưới đây để đăng nhập vào hệ thống:
-- Tài khoản (Username): phong / nam / an
+- Tài khoản (Username): phong / phongvu / thanhphong 
 - Mật khẩu (Password): 123456
 
 ## Lưu ý cho Lập trình viên

@@ -8,6 +8,7 @@ CREATE TABLE auth.users (
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(100) UNIQUE,
+    phone VARCHAR(15) UNIQUE,
     age INTEGER CHECK (age >= 0),
     role_id INTEGER NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,

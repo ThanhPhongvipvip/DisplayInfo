@@ -49,6 +49,34 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// Register API
+app.post('/api/register', async (req, res) => {
+  const { username, password, email, phone } = req.body;
+  if (!username || !password || !email || !phone) {
+    return res.status(400).json({ status: 'error', message: 'Vui lòng nhập đầy đủ thông tin' });
+  }
+
+  try {
+    // Check if user already exists
+    const userExist = await pool.query('SELECT id FROM auth.users WHERE username = $1', [username]);
+    if (userExist.rows.length > 0) {
+      return res.status(400).json({ status: 'error', message: 'Tên đăng nhập đã tồn tại' });
+    }
+
+    // Insert new user with role_id = 3 (CUSTOMER)
+    const result = await pool.query(`
+      INSERT INTO auth.users (username, password, role_id) 
+      VALUES ($1, $2, 3) 
+      RETURNING id, username
+    `, [username, password]);
+
+    res.json({ status: 'success', message: 'Đăng ký thành công', data: result.rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ status: 'error', message: 'Lỗi server khi đăng ký' });
+  }
+});
+
 // Products API
 app.get('/api/products', async (req, res) => {
   try {

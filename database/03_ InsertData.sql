@@ -8,10 +8,8 @@ INSERT INTO auth.users
     (username, password, email, age, role_id)
 VALUES
     ('phong', '123456', 'phong@gmail.com', 21, 1),
-    ('nam', '123456', 'nam@gmail.com', 22, 2),
-    ('an', '123456', 'an@gmail.com', 20, 3),
-    ('minh', '123456', 'minh@gmail.com', 25, 3),
-    ('long', '123456', 'long@gmail.com', 19, 3);
+    ('phongvu', '123456', 'phongvu@gmail.com', 22, 2),
+    ('thanhphong', '123456', 'thanhphong@gmail.com', 20, 3);
 
 INSERT INTO catalog.categories (name)
 VALUES

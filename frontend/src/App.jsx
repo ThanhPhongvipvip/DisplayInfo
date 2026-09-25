@@ -4,14 +4,18 @@ function App() {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [loginError, setLoginError] = useState('')
-  
+  const [isRegisterMode, setIsRegisterMode] = useState(false)
+  const [registerSuccess, setRegisterSuccess] = useState('')
+
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState([])
   const [showCart, setShowCart] = useState(false)
-  
+
   const [orders, setOrders] = useState([])
-  
+
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'
 
   useEffect(() => {
@@ -46,6 +50,7 @@ function App() {
   const handleLogin = async (e) => {
     e.preventDefault()
     setLoginError('')
+    setRegisterSuccess('')
     try {
       const res = await fetch(`${apiUrl}/api/login`, {
         method: 'POST',
@@ -60,6 +65,28 @@ function App() {
       }
     } catch (err) {
       setLoginError('Connection error. Please try again later.');
+    }
+  }
+
+  const handleRegister = async (e) => {
+    e.preventDefault()
+    setLoginError('')
+    setRegisterSuccess('')
+    try {
+      const res = await fetch(`${apiUrl}/api/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, email, phone })
+      });
+      const data = await res.json();
+      if (data.status === 'success') {
+        setRegisterSuccess('Đăng ký thành công! Bạn có thể đăng nhập ngay.');
+        setIsRegisterMode(false);
+      } else {
+        setLoginError(data.message);
+      }
+    } catch (err) {
+      setLoginError('Lỗi kết nối. Vui lòng thử lại sau.');
     }
   }
 
@@ -98,7 +125,7 @@ function App() {
         alert('Order placed successfully.');
         setCart([]);
         setShowCart(false);
-        fetchProducts(); 
+        fetchProducts();
         if (user.role_name === 'ADMIN') fetchOrders();
       } else {
         alert(data.message);
@@ -111,18 +138,18 @@ function App() {
   const cartTotal = cart.reduce((sum, item) => sum + (Number(item.price) * item.cartQuantity), 0);
   const cartItemCount = cart.reduce((sum, item) => sum + item.cartQuantity, 0);
 
-  // === RENDER LOGIN ===
   if (!user) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#f4f5f7', fontFamily: '"Inter", "Segoe UI", sans-serif' }}>
         <div style={{ padding: '2.5rem', backgroundColor: '#ffffff', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.05)', width: '380px' }}>
-          <h2 style={{ textAlign: 'center', color: '#111827', margin: '0 0 0.5rem 0', fontWeight: 600 }}>Welcome Back</h2>
-          <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '0.875rem', marginBottom: '2rem' }}>Please sign in to your account</p>
-          <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <h2 style={{ textAlign: 'center', color: '#111827', margin: '0 0 0.5rem 0', fontWeight: 600 }}>
+            {isRegisterMode ? 'Tạo Tài Khoản' : 'Welcome Back'}
+          </h2>
+          <form onSubmit={isRegisterMode ? handleRegister : handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div>
               <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: '#374151', marginBottom: '0.5rem' }}>Username</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
                 style={{ width: '100%', boxSizing: 'border-box', padding: '0.75rem', borderRadius: '6px', border: '1px solid #d1d5db', outline: 'none', transition: 'border-color 0.15s ease-in-out' }}
@@ -132,28 +159,67 @@ function App() {
             </div>
             <div>
               <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: '#374151', marginBottom: '0.5rem' }}>Password</label>
-              <input 
-                type="password" 
+              <input
+                type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 style={{ width: '100%', boxSizing: 'border-box', padding: '0.75rem', borderRadius: '6px', border: '1px solid #d1d5db', outline: 'none', transition: 'border-color 0.15s ease-in-out' }}
                 required
               />
             </div>
+            {isRegisterMode && (
+              <>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: '#374151', marginBottom: '0.5rem' }}>Email</label>
+                  <input 
+                    type="email" 
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    style={{ width: '100%', boxSizing: 'border-box', padding: '0.75rem', borderRadius: '6px', border: '1px solid #d1d5db', outline: 'none', transition: 'border-color 0.15s ease-in-out' }}
+                    required
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: '#374151', marginBottom: '0.5rem' }}>Số điện thoại</label>
+                  <input 
+                    type="tel" 
+                    value={phone}
+                    onChange={e => setPhone(e.target.value)}
+                    style={{ width: '100%', boxSizing: 'border-box', padding: '0.75rem', borderRadius: '6px', border: '1px solid #d1d5db', outline: 'none', transition: 'border-color 0.15s ease-in-out' }}
+                    required
+                  />
+                </div>
+              </>
+            )}
             {loginError && <p style={{ color: '#ef4444', margin: 0, fontSize: '0.875rem', textAlign: 'center' }}>{loginError}</p>}
+            {registerSuccess && <p style={{ color: '#10b981', margin: 0, fontSize: '0.875rem', textAlign: 'center' }}>{registerSuccess}</p>}
+
             <button type="submit" style={{ padding: '0.75rem', backgroundColor: '#2563eb', color: '#ffffff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 500, fontSize: '1rem', marginTop: '0.5rem', transition: 'background-color 0.15s ease-in-out' }}>
-              Sign In
+              {isRegisterMode ? 'Đăng Ký' : 'Sign In'}
             </button>
           </form>
-          <div style={{ marginTop: '2rem', fontSize: '0.75rem', color: '#9ca3af', textAlign: 'center' }}>
-            Test accounts: phong/nam/an | Password: 123456
+          
+          <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.875rem' }}>
+            <span style={{ color: '#6b7280' }}>
+              {isRegisterMode ? 'Đã có tài khoản? ' : 'Chưa có tài khoản? '}
+            </span>
+            <button
+              onClick={() => {
+                setIsRegisterMode(!isRegisterMode);
+                setLoginError('');
+                setRegisterSuccess('');
+              }}
+              style={{ background: 'none', border: 'none', color: '#2563eb', cursor: 'pointer', fontWeight: 500, textDecoration: 'underline', padding: 0 }}
+            >
+              {isRegisterMode ? 'Đăng nhập ngay' : 'Đăng ký ngay'}
+            </button>
           </div>
+
         </div>
       </div>
     )
   }
 
-  // === RENDER E-COMMERCE ===
   return (
     <div style={{ fontFamily: '"Inter", "Segoe UI", sans-serif', backgroundColor: '#f9fafb', minHeight: '100vh' }}>
       {/* Header */}
@@ -163,13 +229,13 @@ function App() {
           <span style={{ fontSize: '0.875rem', color: '#4b5563' }}>
             Signed in as <strong style={{ color: '#111827' }}>{user.username}</strong> <span style={{ color: '#9ca3af' }}>({user.role_name})</span>
           </span>
-          <button 
+          <button
             onClick={() => setShowCart(true)}
             style={{ padding: '0.5rem 1rem', backgroundColor: '#f3f4f6', color: '#111827', border: '1px solid #e5e7eb', borderRadius: '6px', cursor: 'pointer', fontWeight: 500, fontSize: '0.875rem', transition: 'all 0.15s ease-in-out' }}
           >
             Cart ({cartItemCount})
           </button>
-          <button 
+          <button
             onClick={() => { setUser(null); setUsername(''); setPassword(''); setCart([]); setShowCart(false); }}
             style={{ padding: '0.5rem 1rem', backgroundColor: 'transparent', color: '#6b7280', border: '1px solid #d1d5db', borderRadius: '6px', cursor: 'pointer', fontSize: '0.875rem', transition: 'all 0.15s ease-in-out' }}
           >
@@ -180,7 +246,7 @@ function App() {
 
       {/* Main Content */}
       <main style={{ padding: '3rem', maxWidth: '1200px', margin: '0 auto' }}>
-        
+
         {/* Admin Section */}
         {user.role_name === 'ADMIN' && (
           <div style={{ marginBottom: '3rem', padding: '2rem', backgroundColor: '#ffffff', borderRadius: '12px', border: '1px solid #e5e7eb', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
@@ -231,16 +297,16 @@ function App() {
                   {p.quantity > 0 ? `In Stock (${p.quantity})` : 'Out of Stock'}
                 </div>
               </div>
-              <button 
+              <button
                 onClick={() => addToCart(p)}
                 disabled={p.quantity <= 0}
-                style={{ 
-                  width: '100%', padding: '0.75rem', 
-                  backgroundColor: p.quantity > 0 ? '#111827' : '#e5e7eb', 
-                  color: p.quantity > 0 ? '#ffffff' : '#9ca3af', 
-                  border: 'none', borderRadius: '6px', 
-                  cursor: p.quantity > 0 ? 'pointer' : 'not-allowed', 
-                  fontWeight: 500, transition: 'background-color 0.15s' 
+                style={{
+                  width: '100%', padding: '0.75rem',
+                  backgroundColor: p.quantity > 0 ? '#111827' : '#e5e7eb',
+                  color: p.quantity > 0 ? '#ffffff' : '#9ca3af',
+                  border: 'none', borderRadius: '6px',
+                  cursor: p.quantity > 0 ? 'pointer' : 'not-allowed',
+                  fontWeight: 500, transition: 'background-color 0.15s'
                 }}
               >
                 Add to Cart
@@ -254,13 +320,13 @@ function App() {
       {showCart && (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(17, 24, 39, 0.4)', zIndex: 50, display: 'flex', justifyContent: 'flex-end', backdropFilter: 'blur(2px)' }}>
           <div style={{ width: '400px', backgroundColor: '#ffffff', height: '100%', display: 'flex', flexDirection: 'column', boxShadow: '-4px 0 15px rgba(0,0,0,0.05)' }}>
-            
+
             {/* Cart Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 2rem', borderBottom: '1px solid #e5e7eb' }}>
               <h2 style={{ margin: 0, fontSize: '1.25rem', color: '#111827', fontWeight: 600 }}>Your Cart</h2>
               <button onClick={() => setShowCart(false)} style={{ background: 'none', border: 'none', fontSize: '1.25rem', cursor: 'pointer', color: '#6b7280' }}>✕</button>
             </div>
-            
+
             {/* Cart Items */}
             <div style={{ flex: 1, overflowY: 'auto', padding: '2rem' }}>
               {cart.length === 0 ? (
@@ -290,9 +356,9 @@ function App() {
               <div style={{ padding: '2rem', borderTop: '1px solid #e5e7eb', backgroundColor: '#f9fafb' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.125rem', fontWeight: 600, color: '#111827', marginBottom: '1.5rem' }}>
                   <span>Total</span>
-                  <span>{cartTotal.toLocaleString()} ₫</span>
+                  <span>{cartTotal.toLocaleString()}</span>
                 </div>
-                <button 
+                <button
                   onClick={checkout}
                   style={{ width: '100%', padding: '0.875rem', backgroundColor: '#111827', color: '#ffffff', border: 'none', borderRadius: '6px', fontSize: '1rem', fontWeight: 500, cursor: 'pointer', transition: 'background-color 0.15s' }}
                 >
