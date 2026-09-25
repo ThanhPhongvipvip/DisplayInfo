@@ -351,7 +351,6 @@ function App() {
               )}
             </div>
 
-            {/* Cart Footer */}
             {cart.length > 0 && (
               <div style={{ padding: '2rem', borderTop: '1px solid #e5e7eb', backgroundColor: '#f9fafb' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.125rem', fontWeight: 600, color: '#111827', marginBottom: '1.5rem' }}>

@@ -603,3 +603,126 @@ architecture-beta
     disk2:T -- B:db
 
 ```
+## 3. Sequence diagram 
+
+Example:
+
+```bash
+sequenceDiagram
+    Alice->>John: Hello John, how are you?
+    John-->>Alice: Great!
+    Alice-)John: See you later!
+```
+
+```mermaid
+sequenceDiagram
+    Alice->>John: Hello John, how are you?
+    John-->>Alice: Great!
+    Alice-)John: See you later!
+```
+
+Example 2: Default theme and look (V12.0.0)
+
+```bash
+sequenceDiagram
+  autonumber
+  actor Customer
+  participant Web as Web app
+  participant API as API gateway
+  participant Bank
+  Customer->>Web: Place order
+  Web->>API: POST /orders
+  activate API
+  API->>Bank: Authorise payment
+  Bank-->>API: Approved
+  API-->>Web: 201 Created
+  deactivate API
+  Web-->>Customer: Order confirmed
+  Note over Customer,Bank: One order, one transaction
+
+```
+
+```mermaid
+sequenceDiagram
+  autonumber
+  actor Customer
+  participant Web as Web app
+  participant API as API gateway
+  participant Bank
+  Customer->>Web: Place order
+  Web->>API: POST /orders
+  activate API
+  API->>Bank: Authorise payment
+  Bank-->>API: Approved
+  API-->>Web: 201 Created
+  deactivate API
+  Web-->>Customer: Order confirmed
+  Note over Customer,Bank: One order, one transaction
+```
+
+### 3.1. Syntax
+
+#### a. Participants
+
+```bash
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Bob->>Alice: Hi Alice
+    Alice->>Bob: Hi Bob
+```
+```mermaid
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Bob->>Alice: Hi Alice
+    Alice->>Bob: Hi Bob
+```
+
+#### b. Actor
+```bash
+sequenceDiagram
+    actor Alice
+    actor Bob
+    Alice->>Bob: Hi Bob
+    Bob->>Alice: Hi Alice
+```
+```mermaid
+sequenceDiagram
+    actor Alice
+    actor Bob
+    Alice->>Bob: Hi Bob
+    Bob->>Alice: Hi Alice
+```
+#### c. Boundary
+```bash
+sequenceDiagram
+    participant Alice@{ "type" : "boundary" }
+    participant Bob
+    Alice->>Bob: Request from boundary
+    Bob->>Alice: Response to boundary
+```
+```mermaid
+sequenceDiagram
+    participant Alice@{ "type" : "boundary" }
+    participant Bob
+    Alice->>Bob: Request from boundary
+    Bob->>Alice: Response to boundary
+```
+#### d. Control
+```bash
+sequenceDiagram
+    participant Alice@{ "type" : "control" }
+    participant Bob
+    Alice->>Bob: Control request
+    Bob->>Alice: Control response
+```
+```mermaid
+sequenceDiagram
+    participant Alice@{ "type" : "control" }
+    participant Bob
+    Alice->>Bob: Control request
+    Bob->>Alice: Control response
+```
+
+#### e. Enity
