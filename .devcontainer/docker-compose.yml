@@ -32,5 +32,4 @@ services:
       - DB_NAME=webapp_db
     depends_on:
       - database
-    # Đã bỏ gọi a.sh vì file này giờ được dùng chạy docker run bên ngoài.
     command: ["tail", "-f", "/dev/null"]

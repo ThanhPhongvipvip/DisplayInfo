@@ -1,12 +1,8 @@
-#!/bin/bash
 
-# Lấy đường dẫn gốc của project (thư mục Login)
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
-echo "=== Build Docker Image ==="
 docker build -t login-webapp "$PROJECT_ROOT/.devcontainer"
 
-echo "=== Run Docker Container ==="
 docker run -it --rm \
   -p 3000:3000 \
   -p 5000:5000 \
