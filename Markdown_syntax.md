@@ -1,17 +1,29 @@
-100,0
+# Writing mathematical expressions 
 
-sqrt
-
-Delta
-
- $$ x_2 = ( + \sqrt{\Delta + 4)} \times \frac {a}{b}   $$
-
-$$ \delta * \Delta * \sigma_m *\times \sum \int{a^2 +b^2} \infty \lim_{x \to \infty }$$
- $$
-\sum_{i=1}^{n} x_i = x_1 + x_2 + \dots + x_n
-$$
-
-$$ \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi} 
-
-$$
-fdasfasdfds
+| Ký hiệu | Cách viết |
+|:--|:--|
+|$\to$|\to |
+|$\infty$|\infty|
+|$k_{n+1}$|k_{n+1}|
+|$n^2$|n^2|
+|$k_n^2$|k_n^2|
+|$\frac{n!}{k!(n-k)!}$|\frac{n!}{k!(n-k)!}|
+|$\binom{n}{k}$|\binom{n}{k}|
+|$\frac{\frac{x}{a}}{x-a}$|\frac{\frac{x}{a}}{x-a}|
+|$^3/_7$|^3/_7|
+|$\sqrt{k}$|\sqrt{k}|
+|$\sqrt[n]{k}$|\sqrt[n]{k}|
+|$\sum_{i=1}^{10} t_i$|\sum_{i=1}^{10} t_i|
+|$\int_0^\infty \mathrm{e}^{-x}\,\mathrm{d}x$|\int_0^\infty \mathrm{e}^{-x}\,\mathrm{d}x|
+|$\sum$|\sum|
+|$\prod$|\prod|
+|$\alpha$|\alpha|
+|$\beta$|\beta|
+|$\gamma$|\gamma|
+|$\Gamma$|\Gamma|
+|$\pi$|\pi|
+|$\Pi$|\Pi|
+|$\phi$|\phi|
+|$\Phi$|\Phi|
+|$\varphi$|\varphi|
+|$\theta$|\theta|
